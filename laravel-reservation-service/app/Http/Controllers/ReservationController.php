@@ -12,7 +12,7 @@ class ReservationController extends Controller
     {
         return response()->json([
             'status' => 'success',
-            'data' => new ReservationResource($action($request->validated())),
+            'data' => new ReservationResource($action($request->validated(), $request->user())),
         ]);
     }
 }

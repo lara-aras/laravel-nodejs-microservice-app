@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateReservationRequest extends FormRequest
@@ -11,7 +12,9 @@ class CreateReservationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // TODO
+        $email = $this->input('email');
+
+        return User::where('email', $email)->exists();
     }
 
     /**
@@ -24,8 +27,8 @@ class CreateReservationRequest extends FormRequest
         return [
             'email' => ['required', 'email'],
             'parking_space_id' => ['required', 'integer'],
-            'reservation_start' => ['required', 'datetime'],
-            'reservation_end' => ['required', 'datetime'],
+            'reservation_start' => ['required', 'string'],
+            'reservation_end' => ['required', 'string'],
         ];
     }
 }
