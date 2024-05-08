@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\ParkingSpace;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -27,7 +28,7 @@ class CreateReservationTest extends TestCase
 
         $this->reservationData = [
             'email' => $this->user->email,
-            'parking_space_id' => $this->faker->randomNumber(),
+            'parking_space_id' => ParkingSpace::factory()->create()->id,
             'reservation_start' => $this->faker->dateTime->format('Y-m-d H:i:s'),
             'reservation_end' => $this->faker->dateTime->format('Y-m-d H:i:s'),
         ];
@@ -47,9 +48,9 @@ class CreateReservationTest extends TestCase
             ]);
     }
 
-    public function testReservationCannotBeCreatedWithoutParkingSpaceId(): void
+    public function testReservationCannotBeCreatedWithInvalidParkingSpaceId(): void
     {
-        unset($this->reservationData['parking_space_id']);
+        $this->reservationData['parking_space_id'] = 999999;
 
         $response = $this->actingAs($this->user)->postJson($this->route, $this->reservationData);
 

@@ -26,7 +26,7 @@ class CreateReservationRequest extends FormRequest
     {
         return [
             'email' => ['required', 'email'],
-            'parking_space_id' => ['required', 'integer'],
+            'parking_space_id' => ['required', 'integer', 'exists:parking_spaces,id'],
             'reservation_start' => ['required', 'string'],
             'reservation_end' => ['required', 'string'],
         ];
