@@ -5,8 +5,7 @@ namespace App\Actions;
 use App\Models\Reservation;
 use App\Models\User;
 use Carbon\Carbon;
-
-class CreateResevationAction
+class CreateReservationAction
 {
     public function __invoke(array $reservationData, User $user)
     {

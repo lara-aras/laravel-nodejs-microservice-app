@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CreateResevationAction;
+use App\Actions\CreateReservationAction;
 use App\Http\Requests\CreateReservationRequest;
 use App\Http\Resources\ReservationResource;
 
 class ReservationController extends Controller
 {
-    public function create(CreateReservationRequest $request, CreateResevationAction $action)
+    public function store(CreateReservationRequest $request, CreateReservationAction $action)
     {
         return response()->json([
             'status' => 'success',

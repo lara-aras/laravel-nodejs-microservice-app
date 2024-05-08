@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->int('user_id');
-            $table->int('parking_space_id');
+            $table->integer('user_id');
+            $table->integer('parking_space_id');
             $table->dateTime('reservation_start');
             $table->dateTime('reservation_end');
             $table->timestamps();
