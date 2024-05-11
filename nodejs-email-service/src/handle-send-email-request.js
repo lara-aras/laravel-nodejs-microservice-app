@@ -1,4 +1,5 @@
 const renderEmail = require("./render-email");
+const sendEmail = require("./send-email");
 
 module.exports = (req, res) => {
   let body = "";
@@ -10,6 +11,8 @@ module.exports = (req, res) => {
   req.on("end", () => {
     const requestBody = JSON.parse(body);
 
+    let emailHtml;
+
     renderEmail(requestBody, (err, html) => {
       if (err) {
         console.error(err.message);
@@ -17,12 +20,20 @@ module.exports = (req, res) => {
         res.statusCode = 500;
         res.end("An error occured while rendering the email.");
       } else {
-        const emailHtml = html;
-        
-        console.log(emailHtml);
+        emailHtml = html;
+      }
+    });
 
-        res.statusCode = 200;
-        res.end(`Email "${requestBody.template}" sent successfully.`);
+    sendEmail({ ...requestBody, html: emailHtml }, (err, sentEmail) => {
+      if (err) {
+        console.error(err.message);
+
+        res.statusCode = 500;
+        res.end("An error occured while sending the email.");
+      } else {
+        console.log(sentEmail);
+        
+        res.end("Email sent successfully.");
       }
     });
   });
