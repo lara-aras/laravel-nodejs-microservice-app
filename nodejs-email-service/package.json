@@ -4,11 +4,14 @@
   "description": "A NodeJS microservice designed to handle and process email sending requests.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "Lara Aras",
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.10"
+  },
+  "devDependencies": {
+    "mocha": "^10.4.0"
   }
 }
