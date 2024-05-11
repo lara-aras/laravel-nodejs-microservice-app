@@ -8,8 +8,22 @@ module.exports = (req, res) => {
   });
 
   req.on("end", () => {
-    const { template, email, subject, parameters } = JSON.parse(body);
+    const requestBody = JSON.parse(body);
 
-    res.end(`Email "${template}" sent successfully.`);
+    renderEmail(requestBody, (err, html) => {
+      if (err) {
+        console.error(err.message);
+
+        res.statusCode = 500;
+        res.end("An error occured while rendering the email.");
+      } else {
+        const emailHtml = html;
+        
+        console.log(emailHtml);
+
+        res.statusCode = 200;
+        res.end(`Email "${requestBody.template}" sent successfully.`);
+      }
+    });
   });
 };
