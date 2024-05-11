@@ -17,7 +17,7 @@ module.exports = (req, res) => {
     renderEmail(requestBody, (err, html) => {
       if (err) {
         console.error(err.message);
-        database.storeEmailSendSuccess(requestBody.email, requestBody.subject, null, err.message);
+        database.storeEmailSendFailure(requestBody.email, requestBody.subject, null, err.message);
 
         res.statusCode = 500;
         res.end("An error occured while rendering the email.");
@@ -29,7 +29,7 @@ module.exports = (req, res) => {
     sendEmail({ ...requestBody, html: emailHtml }, (err, sentEmail) => {
       if (err) {
         console.error(err.message);
-        database.storeEmailSendSuccess(requestBody.email, requestBody.subject, emailHtml, err.message);
+        database.storeEmailSendFailure(requestBody.email, requestBody.subject, emailHtml, err.message);
 
         res.statusCode = 500;
         res.end("An error occured while sending the email.");
