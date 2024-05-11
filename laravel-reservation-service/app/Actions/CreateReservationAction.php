@@ -16,7 +16,7 @@ class CreateReservationAction
 
         $reservation = Reservation::create($reservationData);
 
-        $this->sendReservationConfirmationEmail($reservation->with(['user', 'parkingSpace']));
+        $this->sendReservationConfirmationEmail($reservation->load(['user', 'parkingSpace']));
 
         return $reservation;
     }
@@ -32,7 +32,7 @@ class CreateReservationAction
     private function sendReservationConfirmationEmail(Reservation $reservation): void
     {
         try {
-            $response = Http::post('http://localhost:8080/send-email', [
+            $response = Http::post('http://localhost:4001/send-email', [
                 'template' => 'reservation-confirmation',
                 'email' => $reservation->user->email,
                 'subject' => 'Reservation Confirmation',
@@ -44,6 +44,8 @@ class CreateReservationAction
             if ($response->failed()) {
                 throw new \Exception('Failed to send reservation confirmation email: ' . $response->body());
             }
+
+            Log::info($response);
         } catch (\Exception $e) {
             Log::error('Exception caught while sending reservation confirmation email', [
                 'email' => $reservation->user->email,
