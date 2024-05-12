@@ -17,6 +17,7 @@ module.exports = (req, res) => {
     renderEmail(requestBody, (err, html) => {
       if (err) {
         console.error(err.message);
+
         database.storeEmailSendFailure(
           requestBody.recipient,
           requestBody.subject,
@@ -34,6 +35,7 @@ module.exports = (req, res) => {
     sendEmail({ ...requestBody, html: emailHtml }, (err, sentEmail) => {
       if (err) {
         console.error(err.message);
+
         database.storeEmailSendFailure(
           requestBody.recipient,
           requestBody.subject,
@@ -45,6 +47,7 @@ module.exports = (req, res) => {
         res.end("An error occured while sending the email.");
       } else {
         console.log(sentEmail);
+
         database.storeEmailSendSuccess(
           requestBody.recipient,
           requestBody.subject,
@@ -64,6 +67,7 @@ const validateRequestBody = (input) => {
     requestBody = JSON.parse(input);
   } catch (err) {
     console.error(err.message);
+    
     res.statusCode = 400;
     res.end("Invalid JSON input.");
   }
@@ -71,10 +75,10 @@ const validateRequestBody = (input) => {
   const requiredFields = ["template", "recipient", "subject", "parameters"];
 
   for (const field of requiredFields) {
-	if (!requestBody[field]) {
-	  res.statusCode = 400;
-	  res.end(`Missing required field: ${field}`);
-	}
+    if (!requestBody[field]) {
+      res.statusCode = 400;
+      res.end(`Missing required field: ${field}`);
+    }
   }
 
   return requestBody;
