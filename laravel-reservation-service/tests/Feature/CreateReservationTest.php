@@ -45,7 +45,7 @@ class CreateReservationTest extends TestCase
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('reservations', [
-            'user_id' => $this->user->id,
+            'user_id' => $this->user->getKey(),
             'parking_space_id' => $this->reservationData['parking_space_id'],
             'reservation_start' => $this->reservationData['reservation_start'],
             'reservation_end' => $this->reservationData['reservation_end'],
