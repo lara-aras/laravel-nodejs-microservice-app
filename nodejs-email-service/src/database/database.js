@@ -5,10 +5,10 @@ const db = new sqlite3.Database(config.databasePath);
 
 db.serialize(function () {
   db.run(
-    "CREATE TABLE IF NOT EXISTS sent_emails (recipient TEXT, subject TEXT, html TEXT, date_sent TEXT)"
+    "CREATE TABLE IF NOT EXISTS sent_emails (recipient TEXT NOT NULL, subject TEXT NOT NULL, html TEXT NOT NULL, date_sent TEXT NOT NULL)"
   );
   db.run(
-    "CREATE TABLE IF NOT EXISTS failed_emails (recipient TEXT, subject TEXT, html TEXT, error TEXT, date_failed TEXT)"
+    "CREATE TABLE IF NOT EXISTS failed_emails (recipient TEXT NOT NULL, subject TEXT NOT NULL, html TEXT, error TEXT NOT NULL, date_failed TEXT NOT NULL)"
   );
 });
 
