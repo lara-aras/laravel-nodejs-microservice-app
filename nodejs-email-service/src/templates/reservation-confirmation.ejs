@@ -10,13 +10,12 @@
     <p>Dear <%= reservation.user.name %>,</p>
     <br>
     <p>Thank you for reserving a parking space with us. Here are the details of your reservation:</p>
-    <p>Reservation ID: <%= reservation.id %></p>
-    <p>Parking Space ID: <%= reservation.parking_space_id %></p>
+    <p>Reference Number: <%= reservation.id %></p>
     <p>Parking Space Address: <%= reservation.parking_space.address %></p>
     <p>Reservation Start: <%= new Date(reservation.reservation_start).toLocaleString() %></p>
     <p>Reservation End: <%= new Date(reservation.reservation_end).toLocaleString() %></p>
     <br>
-    <p>If you have any questions or need to modify your reservation, please reply to this email.</p>
+    <p>If you have any questions or need to modify your reservation, please contact <%= supportEmailAddress %>.</p>
     <br>
     <p>Thank you,</p>
     <p>Parkos</p>
