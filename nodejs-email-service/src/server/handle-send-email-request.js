@@ -10,14 +10,19 @@ module.exports = (req, res) => {
   });
 
   req.on("end", () => {
-    const requestBody = JSON.parse(body);
+    const requestBody = validateRequestBody(body);
 
     let emailHtml;
 
     renderEmail(requestBody, (err, html) => {
       if (err) {
         console.error(err.message);
-        database.storeEmailSendFailure(requestBody.email, requestBody.subject, null, err.message);
+        database.storeEmailSendFailure(
+          requestBody.email,
+          requestBody.subject,
+          null,
+          err.message
+        );
 
         res.statusCode = 500;
         res.end("An error occured while rendering the email.");
@@ -29,16 +34,48 @@ module.exports = (req, res) => {
     sendEmail({ ...requestBody, html: emailHtml }, (err, sentEmail) => {
       if (err) {
         console.error(err.message);
-        database.storeEmailSendFailure(requestBody.email, requestBody.subject, emailHtml, err.message);
+        database.storeEmailSendFailure(
+          requestBody.email,
+          requestBody.subject,
+          emailHtml,
+          err.message
+        );
 
         res.statusCode = 500;
         res.end("An error occured while sending the email.");
       } else {
         console.log(sentEmail);
-        database.storeEmailSendSuccess(requestBody.email, requestBody.subject, emailHtml);
+        database.storeEmailSendSuccess(
+          requestBody.email,
+          requestBody.subject,
+          emailHtml
+        );
 
         res.end("Email sent successfully.");
       }
     });
   });
+};
+
+const validateRequestBody = (input) => {
+  let requestBody;
+
+  try {
+    requestBody = JSON.parse(input);
+  } catch (err) {
+    console.error(err.message);
+    res.statusCode = 400;
+    res.end("Invalid JSON input.");
+  }
+
+  const requiredFields = ["template", "email", "subject", "parameters"];
+
+  for (const field of requiredFields) {
+	if (!requestBody[field]) {
+	  res.statusCode = 400;
+	  res.end(`Missing required field: ${field}`);
+	}
+  }
+
+  return requestBody;
 };
