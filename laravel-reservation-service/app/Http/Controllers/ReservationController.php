@@ -10,9 +10,11 @@ class ReservationController extends Controller
 {
     public function store(CreateReservationRequest $request, CreateReservationAction $action)
     {
+        $data = array_merge($request->validated(), ['user_id' => $request->user()->id]);
+
         return response()->json([
             'status' => 'success',
-            'data' => new ReservationResource($action($request->validated(), $request->user())),
+            'data' => new ReservationResource($action($data)),
         ]);
     }
 }

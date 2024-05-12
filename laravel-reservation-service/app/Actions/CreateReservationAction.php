@@ -3,16 +3,15 @@
 namespace App\Actions;
 
 use App\Models\Reservation;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class CreateReservationAction
 {
-    public function __invoke(array $reservationData, User $user)
+    public function __invoke(array $reservationData)
     {
-        $this->prepareData($reservationData, $user);
+        $this->prepareReservationData($reservationData);
 
         $reservation = Reservation::create($reservationData);
 
@@ -21,11 +20,11 @@ class CreateReservationAction
         return $reservation;
     }
 
-    private function prepareData(array &$reservationData, User $user): void
+    private function prepareReservationData(array &$reservationData): void
     {
         $reservationData['reservation_start'] = Carbon::parse($reservationData['reservation_start']);
         $reservationData['reservation_end'] = Carbon::parse($reservationData['reservation_end']);
-        $reservationData['user_id'] = $user->id;
+
         unset($reservationData['email']);
     }
 
