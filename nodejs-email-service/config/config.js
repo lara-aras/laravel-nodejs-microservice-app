@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
-  databasePath: process.env.DATABASE_PATH || "./nodejs_email_service.sqlite",
+  databasePath: process.env.SQLITE_DATABASE_PATH,
 };
