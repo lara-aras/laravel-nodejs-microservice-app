@@ -27,8 +27,8 @@ class CreateReservationRequest extends FormRequest
         return [
             'email' => ['required', 'email'],
             'parking_space_id' => ['required', 'integer', 'exists:parking_spaces,id'],
-            'reservation_start' => ['required', 'string'],
-            'reservation_end' => ['required', 'string'],
+            'reservation_start' => ['required', 'string', 'date_format:Y-m-d H:i:s', 'after:today'],
+            'reservation_end' => ['required', 'string', 'date_format:Y-m-d H:i:s', 'after:reservation_start'],
         ];
     }
 }

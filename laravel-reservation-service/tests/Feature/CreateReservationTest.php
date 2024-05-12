@@ -26,11 +26,15 @@ class CreateReservationTest extends TestCase
 
         $this->user = User::factory()->create();
 
+        // Create dates for reservation
+        $reservationStart = $this->faker->dateTimeBetween('now', '+2 years');
+        $reservationEnd = (clone $reservationStart)->modify('+'.rand(1, 48).' hours');
+
         $this->reservationData = [
             'email' => $this->user->email,
             'parking_space_id' => ParkingSpace::factory()->create()->id,
-            'reservation_start' => $this->faker->dateTime->format('Y-m-d H:i:s'),
-            'reservation_end' => $this->faker->dateTime->format('Y-m-d H:i:s'),
+            'reservation_start' => $reservationStart->format('Y-m-d H:i:s'),
+            'reservation_end' => $reservationEnd->format('Y-m-d H:i:s'),
         ];
     }
 
