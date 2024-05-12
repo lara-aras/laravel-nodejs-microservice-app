@@ -1,6 +1,6 @@
-const renderEmail = require("./email/render-email");
-const sendEmail = require("./email/send-email");
-const database = require("./database/database");
+const renderEmail = require("../email/render-email");
+const sendEmail = require("../email/send-email");
+const database = require("../database/database");
 
 module.exports = (req, res) => {
   let body = "";
