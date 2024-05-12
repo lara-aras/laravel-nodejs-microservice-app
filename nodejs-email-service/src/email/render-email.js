@@ -1,6 +1,6 @@
 const ejs = require("ejs");
 const path = require("path");
-const config = require('../../config/config');
+const config = require("../../config/config");
 
 module.exports = (request, callback) => {
   const { template, parameters } = request;

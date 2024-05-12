@@ -67,7 +67,7 @@ const validateRequestBody = (input) => {
     requestBody = JSON.parse(input);
   } catch (err) {
     console.error(err.message);
-    
+
     res.statusCode = 400;
     res.end("Invalid JSON input.");
   }
