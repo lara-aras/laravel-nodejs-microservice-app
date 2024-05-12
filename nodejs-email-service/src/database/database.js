@@ -1,5 +1,6 @@
 const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database("./nodejs_email_service.sqlite");
+const config = require('../../config/config');
+const db = new sqlite3.Database(config.databasePath);
 
 db.serialize(function () {
   db.run(
