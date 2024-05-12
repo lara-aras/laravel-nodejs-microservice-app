@@ -48,7 +48,7 @@ class CreateReservationAction
             Log::info($response);
         } catch (\Exception $e) {
             Log::error('Exception caught while sending reservation confirmation email', [
-                'email' => $reservation->user->email,
+                'reservation_id' => $reservation->getKey(),
                 'error' => $e->getMessage(),
             ]);
         }
