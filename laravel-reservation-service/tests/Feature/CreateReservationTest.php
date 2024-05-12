@@ -32,7 +32,7 @@ class CreateReservationTest extends TestCase
 
         $this->reservationData = [
             'email' => $this->user->email,
-            'parking_space_id' => ParkingSpace::factory()->create()->id,
+            'parking_space_id' => ParkingSpace::factory()->create()->getKey(),
             'reservation_start' => $reservationStart->format('Y-m-d H:i:s'),
             'reservation_end' => $reservationEnd->format('Y-m-d H:i:s'),
         ];
