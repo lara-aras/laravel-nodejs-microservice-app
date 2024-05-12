@@ -34,7 +34,7 @@ class CreateReservationAction
         try {
             $response = Http::post('http://localhost:4001/send-email', [
                 'template' => 'reservation-confirmation',
-                'email' => $reservation->user->email,
+                'recipient' => $reservation->user->email,
                 'subject' => 'Reservation Confirmation',
                 'parameters' => [
                     'reservation' => $reservation,

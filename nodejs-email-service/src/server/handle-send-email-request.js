@@ -18,7 +18,7 @@ module.exports = (req, res) => {
       if (err) {
         console.error(err.message);
         database.storeEmailSendFailure(
-          requestBody.email,
+          requestBody.recipient,
           requestBody.subject,
           null,
           err.message
@@ -35,7 +35,7 @@ module.exports = (req, res) => {
       if (err) {
         console.error(err.message);
         database.storeEmailSendFailure(
-          requestBody.email,
+          requestBody.recipient,
           requestBody.subject,
           emailHtml,
           err.message
@@ -46,7 +46,7 @@ module.exports = (req, res) => {
       } else {
         console.log(sentEmail);
         database.storeEmailSendSuccess(
-          requestBody.email,
+          requestBody.recipient,
           requestBody.subject,
           emailHtml
         );
@@ -68,7 +68,7 @@ const validateRequestBody = (input) => {
     res.end("Invalid JSON input.");
   }
 
-  const requiredFields = ["template", "email", "subject", "parameters"];
+  const requiredFields = ["template", "recipient", "subject", "parameters"];
 
   for (const field of requiredFields) {
 	if (!requestBody[field]) {
