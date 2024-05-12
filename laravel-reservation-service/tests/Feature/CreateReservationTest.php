@@ -61,9 +61,9 @@ class CreateReservationTest extends TestCase
         $response->assertStatus(422);
     }
 
-    public function testReservationCannotBeCreatedWithoutEmail(): void
+    public function testReservationCannotBeCreatedWithoutUserAccount(): void
     {
-        unset($this->reservationData['email']);
+        $this->reservationData['email'] = "no_account_{$this->reservationData['email']}";
 
         $response = $this->actingAs($this->user)->postJson($this->route, $this->reservationData);
 
